@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">TodoApp</string>
+    <string name="datepicker">datePiker</string>
+    <string name="addtodo">addtodo</string>
+    <string name="writetodo">Add Todo</string>
+    <string name="back">back</string>
+    <string name="confirm">Ok</string>
+    <string name="cancel">cancel</string>
+    <string name="title">Title</string>
+    <string name="inputtitle">Input Title...</string>
+    <string name="done">Done</string>
+    <string name="description">Description</string>
+    <string name="inputdescription">Input Description</string>
+    <string name="time">Time</string>
+    <string name="nocategory">No Category</string>
+    <string name="nottodaytodo">Empty Today Todo...</string>
+    <string name="todaytodo">Today Todo</string>
+    <string name="todaycompletetodo">Completed Today Todo</string>
+    <string name="todo">ToDo</string>
+    <string name="Calendar">Calendar</string>
+    <string name="category">Category</string>
+    <string name="setcategory">Set Category</string>
+</resources>

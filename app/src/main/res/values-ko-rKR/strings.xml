@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">투두</string>
+    <string name="datepicker">datePiker</string>
+    <string name="addtodo">addtodo</string>
+    <string name="writetodo">Todo 추가</string>
+    <string name="back">뒤로가기</string>
+    <string name="confirm">확인</string>
+    <string name="cancel">취소</string>
+    <string name="title">제목</string>
+    <string name="inputtitle">제목을 입력해주세요</string>
+    <string name="done">완료</string>
+    <string name="description">세부정보</string>
+    <string name="inputdescription">세부 정보를 입력해주세요</string>
+    <string name="time">시간</string>
+    <string name="nocategory">카테고리 없음</string>
+    <string name="nottodaytodo">오늘의 Todo 를 추가해보세요</string>
+    <string name="todaytodo">오늘의 Todo</string>
+    <string name="todaycompletetodo">오늘 완료한 Todo</string>
+    <string name="todo">ToDo</string>
+    <string name="Calendar">달력</string>
+    <string name="category">카테고리</string>
+    <string name="setcategory">카테고리 설정</string>
+</resources>
