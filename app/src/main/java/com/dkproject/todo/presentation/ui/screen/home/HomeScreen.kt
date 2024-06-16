@@ -1,18 +1,23 @@
 package com.dkproject.todoapp.presentation.ui.screen.Home
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -29,6 +34,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -38,10 +44,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dkproject.todo.R
 import com.dkproject.todo.presentation.ui.theme.TodoTheme
@@ -63,7 +72,6 @@ fun HomeScreen(
     if (addTodoVisible) {
         AddTodoBottomSheet(onDismiss = { addTodoVisible = false },
             uploadTodo = { todo ->
-
                 viewModel.insertTodo(todo)
                 addTodoVisible = false
             })
@@ -78,7 +86,13 @@ fun HomeScreen(
                 DropdownMenu(expanded = expaneded, onDismissRequest = { expaneded = false }) {
                     DropdownMenuItem(text = { Text(text = stringResource(id = R.string.setcategory)) },
                         onClick = {
-                            context.startActivity(Intent(context,EditCategoryActivity::class.java))
+                            expaneded = false
+                            context.startActivity(
+                                Intent(
+                                    context,
+                                    EditCategoryActivity::class.java
+                                )
+                            )
                         })
                 }
 
@@ -224,7 +238,7 @@ fun TodoItem(
     todo: Todo,
     updateTodo: (Todo) -> Unit,
 ) {
-
+    Log.d("TodoItem", todo.toString())
     Card(modifier = modifier) {
         Row(
             modifier = Modifier
@@ -240,7 +254,21 @@ fun TodoItem(
                     contentDescription = null
                 )
             }
-            Text(text = todo.title)
+            Text(
+                text = todo.title,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            todo.category?.run {
+                Surface(shape = RoundedCornerShape(18.dp), color = Color(todo.categoryColor)) {
+                    Text(
+                        modifier = Modifier.padding(4.dp),
+                        text = todo.category,
+                        fontSize = 14.sp
+                    )
+                }
+            }
         }
     }
 }
