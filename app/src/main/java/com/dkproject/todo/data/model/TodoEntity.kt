@@ -1,5 +1,6 @@
 package com.dkproject.todoapp.data.model
 
+import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.dkproject.todoapp.domain.model.Todo
@@ -13,7 +14,9 @@ data class TodoEntity(
     val title:String,
     val hour: Int? = null,
     val minute: Int? = null,
-    val completed:Boolean = false
+    val completed:Boolean = false,
+    val categoryColor:Int = 0
+
 ){
     fun toDomainModel():Todo{
         return Todo(
@@ -23,7 +26,8 @@ data class TodoEntity(
             title=title,
             hour=hour,
             minute=minute,
-            completed=completed
+            completed=completed,
+            categoryColor = categoryColor
         )
     }
 }
@@ -37,6 +41,7 @@ fun Todo.toEntity(): TodoEntity{
         title=title,
         hour=hour,
         minute=minute,
-        completed=completed
+        completed=completed,
+        categoryColor = categoryColor
     )
 }
