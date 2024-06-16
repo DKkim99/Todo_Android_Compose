@@ -21,5 +21,9 @@
     <string name="Calendar">Calendar</string>
     <string name="category">Category</string>
     <string name="setcategory">Set Category</string>
+    <string name="addcategory">Add Category</string>
+    <string name="newcategory">Add New Category</string>
+    <string name="textcount">%d/30</string>
+    <string name="categoryColor">Category Color</string>
 
 </resources>
