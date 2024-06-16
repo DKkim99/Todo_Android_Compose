@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dkproject.todo.R
+import com.dkproject.todo.presentation.activity.DetailActivity
 import com.dkproject.todo.presentation.ui.theme.TodoTheme
 import com.dkproject.todoapp.domain.model.Todo
 import com.dkproject.todoapp.presentation.activity.EditCategoryActivity
@@ -63,7 +64,7 @@ import com.dkproject.todoapp.presentation.ui.components.AddTodoBottomSheet
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    innerPadding: PaddingValues
+    innerPadding: PaddingValues,
 ) {
     val context = LocalContext.current
     val todoState by viewModel.homeUiState.collectAsState()
@@ -118,9 +119,14 @@ fun HomeScreen(
         ) {
             TodoBody(
                 modifier = Modifier.fillMaxSize(),
-                todoList = todoState.todoList,
+                todoList = todoState.todoList.sortedBy { it.category },
                 updateTodo = {
                     viewModel.updateTodo(it)
+                },
+                todoDetail = { id ->
+                    context.startActivity(Intent(context, DetailActivity::class.java).apply {
+                        putExtra("todoId", id)
+                    })
                 }
             )
         }
@@ -131,7 +137,8 @@ fun HomeScreen(
 fun TodoBody(
     modifier: Modifier = Modifier,
     todoList: List<Todo>,
-    updateTodo: (Todo) -> Unit
+    updateTodo: (Todo) -> Unit,
+    todoDetail: (Int) -> Unit
 ) {
     Box(modifier = modifier) {
         if (todoList.isEmpty()) {
@@ -143,7 +150,8 @@ fun TodoBody(
             TodoList(
                 todoList = todoList.filter { !it.completed },
                 completedTodoList = todoList.filter { it.completed },
-                updateTodo = updateTodo
+                updateTodo = updateTodo,
+                todoDetail = todoDetail
             )
         }
     }
@@ -154,7 +162,8 @@ fun TodoBody(
 fun TodoList(
     todoList: List<Todo>,
     completedTodoList: List<Todo>,
-    updateTodo: (Todo) -> Unit
+    updateTodo: (Todo) -> Unit,
+    todoDetail: (Int) -> Unit,
 ) {
 
     var visibleNotTodo by rememberSaveable { mutableStateOf(true) }
@@ -184,7 +193,8 @@ fun TodoList(
                     TodoItem(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 6.dp),
+                            .padding(vertical = 6.dp)
+                            .clickable { todoDetail(it.id) },
                         todo = it,
                         updateTodo = updateTodo
                     )
@@ -218,7 +228,8 @@ fun TodoList(
                     TodoItem(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 6.dp),
+                            .padding(vertical = 6.dp)
+                            .clickable { todoDetail(it.id) },
                         todo = it,
                         updateTodo = updateTodo
                     )
@@ -251,7 +262,8 @@ fun TodoItem(
             }) {
                 Icon(
                     imageVector = if (todo.completed) Icons.Filled.Circle else Icons.Outlined.Circle,
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = Color(todo.categoryColor)
                 )
             }
             Text(
@@ -260,15 +272,7 @@ fun TodoItem(
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.weight(1f))
-            todo.category?.run {
-                Surface(shape = RoundedCornerShape(18.dp), color = Color(todo.categoryColor)) {
-                    Text(
-                        modifier = Modifier.padding(4.dp),
-                        text = todo.category,
-                        fontSize = 14.sp
-                    )
-                }
-            }
+
         }
     }
 }
