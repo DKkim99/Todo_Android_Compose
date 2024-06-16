@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.dkproject.todo.domain.model.CategoryInfo
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
@@ -22,16 +23,16 @@ class CategoryDataStore @Inject constructor(
         private val CATEGORY_KEY = stringPreferencesKey("category_data")
     }
 
-    suspend fun saveCategoryData(categoryData:List<String>){
+    suspend fun saveCategoryData(categoryData:List<CategoryInfo>){
         val categoryDataString = gson.toJson(categoryData)
         context.dataStore.edit {mutablePreferences->
             mutablePreferences[CATEGORY_KEY] = categoryDataString
         }
     }
 
-    fun getCategoryData(): Flow<List<String>>{
+    fun getCategoryData(): Flow<List<CategoryInfo>>{
         return context.dataStore.data.map { preferences ->
-            gson.fromJson(preferences[CATEGORY_KEY], object:TypeToken<List<String>>(){}.type) ?: emptyList()
+            gson.fromJson(preferences[CATEGORY_KEY], object:TypeToken<List<CategoryInfo>>(){}.type) ?: emptyList()
         }
     }
 
