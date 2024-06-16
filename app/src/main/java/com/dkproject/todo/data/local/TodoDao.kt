@@ -25,4 +25,7 @@ interface TodoDao {
 
     @Query("SELECT * FROM todo_table WHERE date=:date")
     fun dateTodo(date:Long):Flow<List<TodoEntity>>
+
+    @Query("UPDATE todo_table SET categoryColor = :newColor, category = :newCategoryName WHERE category = :categoryName")
+    suspend fun updateCategoryAndColor(categoryName: String,newCategoryName:String, newColor: Int)
 }
