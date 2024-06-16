@@ -29,6 +29,10 @@
             android:name="com.dkproject.todoapp.presentation.activity.EditCategoryActivity"
             android:exported="true"
             android:theme="@style/Theme.Todo"/>
+        <activity
+            android:name=".presentation.activity.DetailActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Todo"/>
     </application>
 
 </manifest>
