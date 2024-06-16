@@ -23,6 +23,14 @@ class TodoRepositoryImpl @Inject constructor(
         localTodoDataSource.updateTodo(todo.toEntity())
     }
 
+    override suspend fun updateCategoryAndColor(
+        categoryName: String,
+        newCategoryName: String,
+        newColor: Int
+    ) {
+        return localTodoDataSource.updateTodoCategoryColor(categoryName, newCategoryName, newColor)
+    }
+
     override fun getTodoById(id: Int): Flow<Todo?> {
         return localTodoDataSource.getTodoById(id).map {
             it?.toDomainModel()
