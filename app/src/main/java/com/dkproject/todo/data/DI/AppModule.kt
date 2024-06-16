@@ -2,6 +2,8 @@ package com.dkproject.todoapp.data.DI
 
 import android.content.Context
 import androidx.room.Room
+import com.dkproject.todo.domain.usecase.GetTodoByIdUseCase
+import com.dkproject.todo.domain.usecase.UpdateTodoCategoryAndColorUseCase
 import com.dkproject.todoapp.data.local.LocalTodoDataSource
 import com.dkproject.todoapp.data.local.TodoDao
 import com.dkproject.todoapp.data.local.TodoDatabase
@@ -72,5 +74,15 @@ object AppModule {
     @Provides
     fun provideSetCategoryUseCase(categoryRepository: CategoryRepository) : SetCategoryUseCase{
         return SetCategoryUseCase(categoryRepository = categoryRepository)
+    }
+
+    @Provides
+    fun provideGetTodoByIdUseCase(todoRepository: TodoRepository) : GetTodoByIdUseCase {
+        return GetTodoByIdUseCase(todoRepository = todoRepository)
+    }
+
+    @Provides
+    fun provideUpdateTodoCategoryAndColor(todoRepository: TodoRepository) : UpdateTodoCategoryAndColorUseCase{
+        return UpdateTodoCategoryAndColorUseCase(todoRepository = todoRepository )
     }
 }
