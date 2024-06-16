@@ -56,7 +56,8 @@ fun AddCategoryDialog(
     isEditMode: Boolean = false,
     editCategoryUid : String = "",
     editCategoryText: String = "",
-    editCategoryColor: Int = 0
+    editCategoryColor: Int = 0,
+    beforeChangeCategory : (String) -> Unit ={}
 ) {
     var categoryUid by remember { mutableStateOf(UUID.randomUUID().toString()) }
     var categoryText by remember { mutableStateOf("") }
@@ -64,6 +65,7 @@ fun AddCategoryDialog(
     var expandColorSection by remember { mutableStateOf(false) }
     val categoryColors = ColorData.getColors()
     if (isEditMode) {
+        beforeChangeCategory(editCategoryText)
         categoryUid = editCategoryUid
         categoryText = editCategoryText
         selectedColor = editCategoryColor
@@ -102,7 +104,9 @@ fun AddCategoryDialog(
                                 focusedIndicatorColor = Color.Transparent,
                                 unfocusedIndicatorColor = Color.Transparent,
                                 unfocusedContainerColor = Color.Transparent,
-                                focusedContainerColor = Color.Transparent
+                                focusedContainerColor = Color.Transparent,
+                                unfocusedTextColor = Color.White,
+                                focusedTextColor = Color.White
                             )
                         )
                         Text(
