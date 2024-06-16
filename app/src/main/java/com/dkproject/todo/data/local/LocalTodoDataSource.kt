@@ -29,4 +29,8 @@ class LocalTodoDataSource @Inject constructor(
     fun getTodoByDate(date:Long) : Flow<List<TodoEntity>> {
         return todoDao.dateTodo(date)
     }
+
+    suspend fun updateTodoCategoryColor(categoryName: String, newCategoryName:String, newColor: Int) {
+        return todoDao.updateCategoryAndColor(categoryName = categoryName, newCategoryName = newCategoryName, newColor = newColor)
+    }
 }
