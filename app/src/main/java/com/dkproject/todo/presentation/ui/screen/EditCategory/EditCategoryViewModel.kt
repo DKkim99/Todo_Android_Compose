@@ -2,6 +2,7 @@ package com.dkproject.todoapp.presentation.ui.screen.EditCategory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dkproject.todo.domain.model.CategoryInfo
 import com.dkproject.todoapp.domain.usecase.GetCategoryUseCase
 import com.dkproject.todoapp.domain.usecase.SetCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,13 +22,29 @@ class EditCategoryViewModel @Inject constructor(
         private const val TIMEOUT_MILLIS = 5_000L
     }
 
-    val categoryList : StateFlow<List<String>> = getCategoryUseCase()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
+
+    val categoryList : StateFlow<List<CategoryInfo>> = getCategoryUseCase()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), listOf())
 
 
-    fun setCategory(category: String) {
+    fun setCategory(category: CategoryInfo) {
         viewModelScope.launch {
+            val categoryList = categoryList.value.toMutableList()
+            val existingCategoryIndex = categoryList.indexOfFirst {it.uid == category.uid}
+            if(existingCategoryIndex != -1)
+                categoryList[existingCategoryIndex] = category
+            else
+                categoryList.add(category)
+            setCategoryUseCase(categoryList)
+        }
+    }
 
+    fun delteCategory(category: CategoryInfo){
+        viewModelScope.launch {
+            val categoryList = categoryList.value.toMutableList()
+            if(categoryList.contains(category))
+                categoryList.remove(category)
+            setCategoryUseCase(categoryList)
         }
     }
 
