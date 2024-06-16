@@ -3,6 +3,7 @@ package com.dkproject.todoapp.presentation.ui.screen.EditCategory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dkproject.todo.domain.model.CategoryInfo
+import com.dkproject.todo.domain.usecase.UpdateTodoCategoryAndColorUseCase
 import com.dkproject.todoapp.domain.usecase.GetCategoryUseCase
 import com.dkproject.todoapp.domain.usecase.SetCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class EditCategoryViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase,
-    private val setCategoryUseCase: SetCategoryUseCase
+    private val setCategoryUseCase: SetCategoryUseCase,
+    private val updateTodoCategoryAndColorUseCase: UpdateTodoCategoryAndColorUseCase
 ):ViewModel() {
     companion object {
         private const val TAG = "EditCategoryViewModel"
@@ -27,16 +29,22 @@ class EditCategoryViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), listOf())
 
 
-    fun setCategory(category: CategoryInfo) {
+    fun setCategory(category: CategoryInfo,beforeCategoryText:String) {
         viewModelScope.launch {
             val categoryList = categoryList.value.toMutableList()
             val existingCategoryIndex = categoryList.indexOfFirst {it.uid == category.uid}
-            if(existingCategoryIndex != -1)
+            if(existingCategoryIndex != -1){
                 categoryList[existingCategoryIndex] = category
+                updateTodoCategoryAndColorUseCase(categoryName = beforeCategoryText, newCategoryName = category.category, newColor = category.color)
+            }
             else
                 categoryList.add(category)
             setCategoryUseCase(categoryList)
         }
+    }
+
+    fun updateTodo(){
+
     }
 
     fun delteCategory(category: CategoryInfo){

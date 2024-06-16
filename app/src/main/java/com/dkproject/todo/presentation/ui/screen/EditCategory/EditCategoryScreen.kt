@@ -58,13 +58,14 @@ fun EditCategoryScreen(
 
     var isEditMode by remember { mutableStateOf(false) }
     var categoryUid by remember { mutableStateOf("") }
+    var beforeCategoryText by remember { mutableStateOf("") }
     var categoryText by remember { mutableStateOf("") }
     var categoryColor by remember { mutableIntStateOf(0) }
 
     if (addCategoryVisible) {
         AddCategoryDialog(
             addCategory = { categoryInfo ->
-                viewModel.setCategory(categoryInfo)
+                viewModel.setCategory(categoryInfo, beforeCategoryText = beforeCategoryText)
                 categoryUid = ""
                 categoryText = ""
                 categoryColor = 0
@@ -75,7 +76,8 @@ fun EditCategoryScreen(
             isEditMode = isEditMode,
             editCategoryUid = categoryUid,
             editCategoryText = categoryText,
-            editCategoryColor = categoryColor
+            editCategoryColor = categoryColor,
+            beforeChangeCategory = {beforeCategoryText = it}
         )
     }
     Scaffold(
