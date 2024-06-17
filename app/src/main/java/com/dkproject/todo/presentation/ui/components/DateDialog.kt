@@ -45,13 +45,14 @@ import com.dkproject.todo.R
 fun DateDialog(
     hour: Int,
     minute: Int,
+    todayDate : (Long) = System.currentTimeMillis(),
     onDismiss: () -> Unit,
     onDateSelected: (Long) -> Unit,
     onTimeSelected: (Int, Int) -> Unit
 ) {
 
 
-    val dateState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
+    val dateState = rememberDatePickerState(initialSelectedDateMillis = todayDate)
     var timeDialogVisible by remember { mutableStateOf(false) }
 
     if (timeDialogVisible) {
@@ -93,7 +94,7 @@ fun DateDialog(
                     Spacer(modifier = Modifier.weight(1f))
                     Text(
                         modifier = Modifier.padding(end = 8.dp),
-                        text = if (hour == 0 && minute == 0) "없음" else
+                        text = if (hour == 0 && minute == 0) stringResource(id = R.string.none) else
                             "${hour.toString().padStart(2, '0')}:${
                                 minute.toString().padStart(2, '0')
                             }"

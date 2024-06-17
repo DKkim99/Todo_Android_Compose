@@ -26,5 +26,6 @@
     <string name="textcount">%d/30</string>
     <string name="categoryColor">Category Color</string>
     <string name="deadline">Deadline</string>
+    <string name="none">None</string>
 
 </resources>

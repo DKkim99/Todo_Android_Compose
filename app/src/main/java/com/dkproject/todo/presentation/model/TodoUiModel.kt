@@ -11,8 +11,8 @@ data class TodoUiModel(
     var category:String?=null,
     var date:Long = 0L,
     var title:String ="",
-    var hour: Int? = null,
-    var minute: Int? = null,
+    var hour: Int = 0,
+    var minute: Int = 0,
     var completed:Boolean = false,
     var categoryColor : Int = 0
 ):Parcelable

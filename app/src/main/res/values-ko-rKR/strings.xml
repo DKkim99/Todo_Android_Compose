@@ -26,4 +26,5 @@
     <string name="textcount">%d/30</string>
     <string name="categoryColor">카테고리 색상</string>
     <string name="deadline">마감일</string>
+    <string name="none">없음</string>
 </resources>

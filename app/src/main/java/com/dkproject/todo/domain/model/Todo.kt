@@ -7,8 +7,8 @@ data class Todo(
     val category:String?=null,
     val date:Long = 0L,
     val title:String ="",
-    val hour: Int? = null,
-    val minute: Int? = null,
+    val hour: Int = 0,
+    val minute: Int = 0,
     val completed:Boolean = false,
     val categoryColor : Int = 0
 )
